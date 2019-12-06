@@ -1,0 +1,226 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lachaise Assignment
+% LaTeX Template
+% Version 1.0 (26/6/2018)
+%
+% This template originates from:
+% http://www.LaTeXTemplates.com
+%
+% Authors:
+% Marion Lachaise & François Févotte
+% Vel (vel@LaTeXTemplates.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass{article}
+
+\input{structure.tex} % Include the file specifying the document structure and custom commands
+\usepackage{graphicx}
+\newcommand{\ts}{\textsuperscript}
+\usepackage{float}
+
+
+%----------------------------------------------------------------------------------------
+%	ASSIGNMENT INFORMATION
+%----------------------------------------------------------------------------------------
+
+\title{Computational Engineering - Engr 8103 \\ Problem Set \#9} % Title of the assignment
+
+\author{Allen Spain\\ \texttt{avs81684@uga.edu}} % Author name and email address
+
+\date{University of Georgia --- 03 December 2019 } % University, school and/or department name(s) and a date
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\maketitle % Print the title
+
+%----------------------------------------------------------------------------------------
+%	INTRODUCTION
+%----------------------------------------------------------------------------------------
+
+\section*{Question 1} % Unnumbered section
+(5 pts.) We use Von-Neumann stability analysis to make sure that the solution un does not increase in size as n increases. We do this by making sure that $\| g(dt, dx, \theta) \| \leq 1 $ for all $\theta $ where
+
+\begin{gather*}
+ \hat{u}^{n+1}(\theta) = g(dt, dx, \theta) \hat{u}^{n}(\theta)
+\end{gather*}
+
+and therefore
+
+\begin{gather*}
+ \|\hat{u}^{n+1}(\theta)\| = \|g(dt,dx,\theta)\hat{u}^{n}(\theta)\| \stackrel{(*)}{=} \|g(dt,dx,\theta)\| \|u^{n}(\theta) \| \leq \| \hat{u}^{n}(\theta) \|
+\end{gather*}
+
+For this to work, we still need to show $ ( \ast ) $. In other words, for complex numbers $z_{1}$ and $z_{2}$,
+show that the following is always true.
+
+\begin{gather*}
+	\| z_{1}z_{2} \| = \| z_{1} \| \|z_{2}\|
+\end{gather*}
+
+% ----------------
+% Answer goes here
+% ----------------
+Assume
+\begin{gather*}
+	z_{1} = (a + ib)\\ z_{2}  = (c + id) \\
+	\| z_{1} \| = \sqrt{a + ib} = \sqrt{(a + ib)(a - ib)} = \sqrt{a^{2} + b^{2}}\\
+	\| z_{2} \| = \sqrt{c + id} = \sqrt{(c + id)(c - id)} = \sqrt{c^{2} + d^{2}} \\
+	\therefore \| z_{1} \| \| z_{1} \| =  \sqrt{( a^{2} + b^{2} )(c^{2} + d^{2})} \\
+	z_{1} z_{1} = (a + ib)(c + id) = (ac - db) + i(ad + bc)\\
+	\| z_{1} z_{1} \| = \sqrt{\underbrace{(ac - db)}_{\text{$\gamma$}} + \underbrace{i(ad + bc)}_{\text{$\beta$}}} = \sqrt{\gamma^{2} + \beta^{2}}\\
+	\| z_{1} z_{1} \|  = \sqrt{(ac - db)^{2} + (ad - bc)^{2}} = \sqrt{(ac)^{2} + (db)^{2} + (ad)^{2} + (bc)^{2} - 2adbc + 2adbc}\\
+	\| z_{1} z_{1} \| = \sqrt{(ac)^{2} +(db)^2 + (ad)^{2} + (bc)^{2}} = \sqrt{(a^{2} + b^{2})(c^{2} + d^{2})}\\
+	\therefore \| z_{1} z_{1} \| = \| z_{1} \| \| z_{1} \|
+\end{gather*}
+
+So as long as $\| g(dt, dx, \theta) \| \leq 1 $ for all $\theta $ then
+\begin{gather*}
+  \|g(dt,dx,\theta)\hat{u}_{n}(\theta)\| = \|g(dt,dx,\theta)\| \|u^{n}(\theta) \| \leq \| \hat{u}^{n}(\theta) \|
+\end{gather*}
+which yeilds stability by Von-Neumann analysis
+
+
+
+\section*{Question 2}
+(10 pts.) Determine the conditions for stability in terms of dt and dx using Von-Neumann
+stability analysis if \textbf{forward time, centered space} discretization used for the following PDE:
+
+\begin{gather*}
+	u_{t} - 4u_{x} = 0
+\end{gather*}
+
+% ----------------
+% Answer goes here
+% ----------------
+Using $F_{t}C_{x}$ discretization
+\begin{gather*}
+	u_{t} - 4u_{x} \simeq \frac{U^{n+1}_{k} - U^{n}_{k}}{dt} + 4\frac{U^{n}_{k+1} - U^{n}_{k-1}}{2dx} = 0\\
+	\frac{U^{n+1}_{k}}{dt} = \frac{U^{n}_{k}}{dt} - 2\frac{U^{n}_{k+1} - U^{n}_{k-1}}{dx}
+\end{gather*}
+
+From Von-Nuemman stability analysis we know $U^{n}_{k} = \hat{U}^{n}e^{jk\theta}$ therefore
+\begin{gather*}
+	\frac{\hat{U}^{n+1}e^{jk\theta}}{dt} = \frac{\hat{U}^{n}e^{jk\theta}}{dt} + 2\frac{\hat{U}^{n}e^{(k+1)j\theta} - \hat{U}^{n}e^{(k-1)j\theta}}{dx}\\
+	\frac{\hat{U}^{n+1}e^{jk\theta}}{dt} = \hat{U}^{n}e^{jk\theta} \left[  \frac{1}{dt} + 2\frac{e^{j\theta} - 2e^{-j\theta}}{dx}\right]\\
+	\hat{U}^{n+1} = \hat{U}^{n}\underbrace{\left[ 1 + \underbrace{ 2\frac{dt}{dx}}_{\text{L}}\left(e^{j\theta} - e^{-j\theta}\right) \right]}_{\text{B}}
+\end{gather*}
+
+For stability $B \leq 1$ so
+\begin{gather*}
+B = 1 + Le^{j\theta} - Le^{-j\theta} \\
+= \| 1+ Le^{j\theta} - Le^{-j\theta} \| \leq 1\\
+= \| 1 + L \left[ cos(\theta) + jsin(\theta) + cos(\theta) - jsin(\theta) \right] \| \\
+= \| 1 + 2L sin(\theta)j \| \leq 1
+= \sqrt{1 + 4L^{2} sin^{2}(\theta)}  \leq 1 \\
+= 1 + 4L^{2} sin^{2}(\theta)  \leq 1 \\
+= 4L^{2} sin^{2}(\theta)  \leq 0 \\
+\Rightarrow \mid L \mid = \mid \frac{2dt}{dx} \mid \leq 0\\
+% \therefore dx \leq 0, \textit{and} dx \neq 0
+% = 4Lsin(\theta) \leq 0 \\
+% \therefore \frac{dt}{dx} \leq 0 \\
+% \rightarrow dt \leq 0
+\end{gather*}
+
+\begin{gather*}
+\begin{cases}
+    \text{$L$ or $sin(\theta)$ must be $= 0$ (or both)} \\
+    \text{if $sin(\theta) = 0$ then $dt, dx \Inn \Bbb R $ but $dx \neq 0$}\\
+    \text{if $sin(\theta) \neq 0$ then $dt = 0$ and $dx \Inn \Bbb R $ but $dx \neq 0$}
+ \end{cases}
+\end{gather*}
+
+
+
+
+\section*{Question 3}
+(10 pts.) Determine the conditions for stability in terms of dt and dx using Von-Neumann stability analysis if \textbf{backward time, centered space} discretization used for the same PDE as in the previous problem.
+
+% ----------------
+% Answer goes here
+% ----------------
+
+Using $B_{t}C_{x}$ discretization
+\begin{gather*}
+	u_{t} - 4u_{x} \simeq \frac{U^{n}_{k} - U^{n-1}_{k}}{dt} + 4\frac{U^{n}_{k+1} - U^{n}_{k-1}}{2dx} = 0\\
+	\frac{U^{n-1}_{k}}{dt} = \frac{U^{n}_{k}}{dt} + 2\frac{U^{n}_{k+1} - U^{n}_{k-1}}{dx}\\
+	\text{ \textit{Let} }n \rightarrow n + 1 \\
+	\frac{U^{n}_{k}}{dt} = \frac{U^{n+1}_{k}}{dt} + 2\frac{U^{n+1}_{k+1} - U^{n+1}_{k-1}}{dx}\\
+	\mathcal{F} : \hat{U}^{n}= \hat{U}^{n+1}\underbrace{\left[ 1 + \underbrace{ 2\frac{dt}{dx}}_{\text{L}}\left(e^{j\theta} - e^{-j\theta}\right) \right]}_{\text{B}}
+\end{gather*}
+
+Since this analysis requires $ \|\hat{U}^{n+1}(\theta) \| \leq \| \hat{U}^{n}(\theta) \| $ and $\|\frac{1}{A} \| = \frac{1}{\|A\|}$ where $A$ is some function
+
+\begin{gather*}
+  B = 1 + Le^{j\theta} - Le^{-j\theta} \\
+  = \| 1+ Le^{j\theta} - Le^{-j\theta} \| \leq 1\\
+  = \| 1 + L \left[ cos(\theta) + jsin(\theta) + cos(\theta) - jsin(\theta) \right] \| \\
+  = \| 1 + 2L sin(\theta)j \| \leq 1
+  = \sqrt{1 + 4L^{2} sin^{2}(\theta)}  \leq 1 \\
+  = \frac{1}{1 + 4L^{2} sin^{2}(\theta)}  \leq 1 \\
+  = 4L^{2} sin^{2}(\theta) \geq 0 \\
+  \Rightarrow  \mid L \mid  = \mid \frac{2dt}{dx} \mid \geq 0\\
+  \therefore dt \Inn \Bbb R , \text{ and } dx  \Inn \Bbb R, \text{ but } dx \neq 0
+  % \therefore dx \leq 0, \textit{and} dx \neq 0
+  % = 4Lsin(\theta) \leq 0 \\
+  % \therefore \frac{dt}{dx} \leq 0 \\
+  % \rightarrow dt \leq 0
+\end{gather*}
+
+\section*{Question 4}
+(10 pts.) Determine the conditions for stability in terms of $dt$ and $dx$ using Von-Neumann stability analysis if \textbf{Crank-Nicholson} discretization with $s = \frac{2}{3}$ is used for the following PDE:
+
+\begin{gather*}
+	u_{t} = 2u_{x}
+\end{gather*}
+
+For your reference, this discretization is
+
+\begin{gather*}
+	\frac{ u^{n+1}_{k} }{ dt } = 2 \left[ \frac{2}{3} \frac{u^{n+1}_{k+1} - 2u^{n+1}_{k} + u^{n+1}_{k-1} }{ dx^{2} }  + \frac{1}{3}\frac{u^{n}{k+1} - 2u^{n}_{k} + u^{n}_{k-1}}{dx^{2}} \right]
+\end{gather*}
+
+% ----------------
+% Answer goes here
+% ----------------
+Discretization using Von-Nuemman stability analysis. I call $u = U$
+The is setup in the form
+\begin{gather*}
+\hat{U}^{n+1}e^{jk\theta}\left[ 1 - \frac{4}{3}\underbrace{\frac{dt}{(dx)^{2}}}_{\text{L}}B^{n+1}\right] =  \hat{U}^ne^{jk\theta} \left[ 1 + \frac{2}{3}\underbrace{\frac{dt}{(dx)^{2}}}_{\text{L}}A^{n}\right]\\
+\hat{U}^{n+1}e^{jk\theta}\left[ 1 - \frac{4}{3}L(e^{j\theta} - 2 + e^{-j\theta})\right] =
+\hat{U}^{n}e^{jk\theta}\left[ 1 + \frac{2}{3}L(e^{j\theta} - 2 + e^{-j\theta}) \right]\\
+\end{gather*}
+
+Therefore
+
+\begin{gather*}
+  \| \frac{\left[ 1 + \frac{2}{3}L(e^{j\theta} - 2 + e^{-j\theta}) \right]}{\left[ 1 - \frac{4}{3}L(e^{j\theta} - 2 + e^{-j\theta})\right]} \| \leq 1\\
+  \Rightarrow (1+\frac{2}{3}L(2cos(\theta) - 2 )^{2} = (1 - \frac{4}{3}L(2cos(\theta) - 2))^{2} \\
+  1 + \frac{2}{3}L \leq 1 - \frac{4}{3}L \\
+  0 \leq -2L\\
+\end{gather*}
+
+\begin{gather*}
+\begin{cases}
+    dt \leq 0 \\
+    dx \neq 0
+ \end{cases}
+\end{gather*}
+
+
+
+
+
+
+
+
+\end{document}

@@ -1,0 +1,156 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lachaise Assignment
+% LaTeX Template
+% Version 1.0 (26/6/2018)
+%
+% This template originates from:
+% http://www.LaTeXTemplates.com
+%
+% Authors:
+% Marion Lachaise & François Févotte
+% Vel (vel@LaTeXTemplates.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass{article}
+
+\input{structure.tex} % Include the file specifying the document structure and custom commands
+\usepackage{graphicx}
+\newcommand{\ts}{\textsuperscript}
+\usepackage{float}
+
+
+%----------------------------------------------------------------------------------------
+%	ASSIGNMENT INFORMATION
+%----------------------------------------------------------------------------------------
+
+\title{Computational Engineering - Engr 8103 \\ Problem Set \#7} % Title of the assignment
+
+\author{Allen Spain\\ \texttt{avs81684@uga.edu}} % Author name and email address
+
+\date{University of Georgia --- 15 November 2019 } % University, school and/or department name(s) and a date
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\maketitle % Print the title
+
+%----------------------------------------------------------------------------------------
+%	INTRODUCTION
+%----------------------------------------------------------------------------------------
+
+\section*{Problem 1} % Unnumbered section
+(10 pts.) Consider the following transport PDE:
+
+\begin{align*}
+	3u_{t} - u_{x} = 0 \\
+	% u(0,x) = \frac{3-x}{1+x^{2} 0 \leq x < \leq 3
+	u(0,x) = \frac{3-x}{1+x^{2}} \quad 0 \leq x \leq 3 \\
+	u(t,3) = sin(t) \quad t \geq 0
+\end{align*}
+
+From the general transport equation
+\begin{align*}
+	u(t,x) = f(x-ct)
+\end{align*}
+
+Because:
+\begin{align*}
+	u_{t} + cu{x} = 0 \\
+	u_{t} = -cu_{x} \\
+	u_{t} = -1/3u_{x} \\
+	c =  1/3
+\end{align*}
+
+Therfore:
+\begin{align*}
+u(t,x) = f(x-ct) = f(x+\frac{1}{3}t)
+\end{align*}
+
+From BC1:
+\begin{align*}
+u(0,x) = \frac{3-x}{1+x^2} = f(u) = \frac{3 - u}{1+u^{2}}\\
+u(t,x)= \frac{3 - x - \frac{1}{3}t}{1+(x+\frac{1}{3}t)^2}
+\end{align*}
+
+From BC2:
+\begin{align*}
+u(t,3) = sin(t) = f(3 + \frac{1}{3}t)
+u = 3 + 1/3t  =  t = 3(u - 3) = f(u) = sin(3(u - 3))
+\end{align*}
+
+substituting in for u
+\begin{align*}
+u(t,3) = sin(t) = f(3 + \frac{1}{3}t) \\
+u(t,x) = sin(3(x + 1/3t - 3))
+\end{align*}
+
+Then rewrite solution
+\begin{align*}
+u(t,x) = u(t,x)= \frac{3 - x - \frac{1}{3}t}{1+(x+\frac{1}{3}t)^2} \quad t \leq 3 - x \\
+u(t,x) = sin(3(x + 1/3t - 3)) \quad t > 3 - x
+\end{align*}
+
+for
+\begin{align*}
+0 \leq x \leq 3 \\
+t \geq 0
+\end{align*}
+
+\noindent
+
+\section*{Problem 2}
+2. (20 pts.) A drug is administered to a patient through injection. The drug concentration in the
+blood stream changes through blood flow and diffusion according to the following PDE:
+
+\begin{align*}
+u_{t} = D_{u_{xx}} - Fu_{x} \\
+u(0,x) = \frac{2x}{1+x^{4}} \quad 0 \leq x \leq 20 \\
+u(t,0) = 0 \quad 0 \leq t \leq 3 \\
+u(t,20) = 0 \quad 0 \leq t \leq 3
+\end{align*}
+
+C
+\begin{align*}
+u_{t} = \frac{ u_{k}^{n+1} - u^{n}_{k} }{dt} \\
+u_{x} = \frac{u_{n}^{k} - u^{n}_{k-1}}{dx} \\
+u_{xx} = \frac{u^{n}_{k-1} - 2u^{n}_{k} + u^{n}_{k+1}}{dx^{2}}
+\end{align*}
+
+Combining terms:
+\begin{align*}
+u_{t} = Du_{xx} - Fu_{x} = \frac{u^{n+1}_{k} - u^{n}_{k}}{dt}\\
+= D\frac{ ( u^{n}_{k-1} - 2u^{n}_{k} + u^{n}_{k+1} )}{dx^{2}} - F\frac{(u^{n}_{k} - u^{n}_{k-1})}{dx} \\
+\therefore u_{k}^{n+1} = D\frac{(u^{n}_{k-1} - 2u^{n}_{k} + u^{n}_{k+1})}{dx}dt + u^{n}_{k}
+\end{align*}
+
+(b)(10 pts.) Write a Matlab code to solve this PDE using the discretization you developed in problem 1. Use D = 0.5, F = 2, dt = 0.02, dx = 0.2. Your code should plot the initial drug concentration and the drug concentrations after one, two and three seconds on the same figure. In other words, plot u(0, x), u(1, x), u(2, x) and u(3, x) vs x. Identify each plot using a legend. Include a hard copy of this figure with your HW solutions.
+
+\lstinputlisting{/Users/allenspain/Desktop/hw7/drug.m}
+
+\begin{figure}[H]
+  \includegraphics[width=\linewidth]{docs/2a.png}
+  \caption{2a}
+  % \label{fig:boat1}
+\end{figure}
+
+\lstinputlisting{/Users/allenspain/Desktop/hw7/drug2.m}
+\begin{figure}[H]
+  \includegraphics[width=\linewidth]{docs/2c.png}
+  \caption{2a}
+  % \label{fig:boat1}
+\end{figure}
+
+
+
+
+
+\end{document}

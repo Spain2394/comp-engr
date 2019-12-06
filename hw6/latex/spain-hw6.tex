@@ -1,0 +1,173 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lachaise Assignment
+% LaTeX Template
+% Version 1.0 (26/6/2018)
+%
+% This template originates from:
+% http://www.LaTeXTemplates.com
+%
+% Authors:
+% Marion Lachaise & François Févotte
+% Vel (vel@LaTeXTemplates.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass{article}
+
+\input{structure.tex} % Include the file specifying the document structure and custom commands
+\usepackage{graphicx}
+\newcommand{\ts}{\textsuperscript}
+<<<<<<< HEAD
+\usepackage{float}
+
+=======
+>>>>>>> 31adf8bead0ca3f0783d74f4a70004e23d603956
+
+%----------------------------------------------------------------------------------------
+%	ASSIGNMENT INFORMATION
+%----------------------------------------------------------------------------------------
+
+\title{Computational Engineering - Engr 8103 \\ Problem Set \#6} % Title of the assignment
+
+\author{Allen Spain\\ \texttt{avs81684@uga.edu}} % Author name and email address
+
+\date{University of Georgia --- 22 October 2019 } % University, school and/or department name(s) and a date
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\maketitle % Print the title
+
+%----------------------------------------------------------------------------------------
+%	INTRODUCTION
+%----------------------------------------------------------------------------------------
+
+\section*{Problem 1} % Unnumbered section
+Show that the following is another valid second order Runge-Kutta method:
+
+\noindent
+From the 2\ts{nd} order Taylor series method:
+
+\noindent
+<<<<<<< HEAD
+Where:
+=======
+Notation:
+>>>>>>> 31adf8bead0ca3f0783d74f4a70004e23d603956
+
+\begin{align*}
+	x  \rightarrow x(t) \\
+	f  \rightarrow f(t,x) \\
+	f_{t}  \rightarrow \frac{\partial f}{\partial t} \\
+	f_{x}  \rightarrow \frac{\partial f}{\partial x}
+\end{align*}
+\begin{align*}
+	\boxed{x(t + h) = x + hf + \frac{h^{2}}{2}(f_{t} + ff_{x})}
+\end{align*}
+
+\noindent
+From the 2\ts{nd} order Runge-Kutta method:
+
+\begin{align*}
+	K_{1} = hf \\
+	K_{2} = hf(t + \frac{2}{3}h, x + \dfrac{2}{3}K_{1}) = h(f +  \frac{2}{3}h(f_{t} + ff_{x})) \\
+	x(t + h) = x(t) + (K_{1} + 3K_{2})/4 \\
+	= x(t) + \dfrac{hf(t,x)}{4} + 3/4(h(f + \frac{2}{3}h(f_{t} + ff_{x}))) \\
+	= x(t) + \dfrac{hf}{4} + \dfrac{3hf}{4} + \dfrac{h^{2}}{2}(f_{t} + ff_{x}) \\
+	\boxed{x(t + h) = x(t) + hf + \frac{h^{2}}{2}(f_{t} + ff_{x})}
+ \end{align*}
+
+<<<<<<< HEAD
+\section*{Problem 2}
+Show that when the fourth-order Runge-Kutta method is applied to the problem $ x^{\prime} = 2x $, the formula for advancing this solution will be
+
+\begin{align*}
+	x(t + h) = \big[1 + 2h + 2h^{2} + \frac{4}{3}h^{3} + \frac{2}{3}h^{4} \big] x(t) \\
+\end{align*}
+
+From the 4\ts{th} order Runge-Kutta method:
+\begin{align*}
+	K_{1} = hf = 2xh \\
+	K_{2} = hf(t + \frac{h}{2}, x + \frac{K_{1}}{2}) = 2xh + 2h^{2}x \\
+	K_{3} = hf(t + \frac{h}{2}, x + \frac{K_{2}}{2}) = 2xh + 2xh^{2} + 2xh^{3} \\
+	K_{4} = hf(t + \frac{h}{2}, x + \frac{K_{3}}{2}) = 2xh + 4xh^{2} + 4xh^{3} + 4xh^{4} \\
+	x(t + h) = x(t) + (K_{1} + 2K_{2} + 2K_{3} + K_{4})/6 \\
+	= x(t) + (2xh + 2(2xh + 2xh^{2}) \\ + 2(2xh + 2xh^{2} + 2xh^{3}) + (2xh + 4xh^{2} + 4xh^{3} + 4xh^{4}))/6 \\
+	x(t + h) = x(t)[1 + 2h + 2h^{2} + \frac{4}{3}h^{3} + \frac{2}{3}h^{4}]
+\end{align*}
+
+\section*{Problem 3}
+Consider the following ODE:
+\begin{align*}
+	x^{\prime} = -y \quad x(0) = 1
+	y^{\prime} = x \quad y(0) = 0
+\end{align*}
+
+\noindent
+(a) Write a Matlab code that solves this equation system on the interval [0, 10] using
+- Second order Taylor series method
+- Second order Runge-Kutta method (does not matter which one you use) - Fourth order Runge-Kutta method
+
+\lstinputlisting{/Users/allenspain/Documents/Development/MATLAB/comp-engr/hw6/ODEComparison.m}
+
+(b) Run your code for h = 0.1, 0.25, 0.5 and 1. Include a hard copy of all four graphs along with your HW solutions.
+
+\begin{figure}[H]
+  \includegraphics[width=\linewidth]{docs/h1.jpg}
+  \caption{h = 1}
+  % \label{fig:boat1}
+\end{figure}
+
+\begin{figure}[H]
+  \includegraphics[width=\linewidth]{docs/05.jpg}
+  \caption{h = 0.5}
+\end{figure}
+
+\begin{figure}[H]
+  \includegraphics[width=\linewidth]{docs/h25.jpg}
+  \caption{h = 0.25}
+\end{figure}
+
+\begin{figure}[H]
+  \includegraphics[width=\linewidth]{docs/0point1.jpg}
+  \caption{h = 0.1}
+\end{figure}
+
+
+\section*{Problem 4}
+Consider the following IVP
+
+\begin{align*}
+	x^{\prime} = x(1-x) \\
+	x(0) = 0.01
+\end{align*}
+with the solution function $ x(t) = 1 - 1/(1 + e^{t}/99)$
+
+\noindent
+(a) Modify adaptive.m available on the course website to implement the Runge-Kutta-Fehlberg algorithm, provided below, to solve this IVP for $0 \leq t \leq 16$ The code should plot the analytical solution and the numerical solution on the same figure.
+
+\lstinputlisting{/Users/allenspain/Documents/Development/MATLAB/comp-engr/hw6/RKF.m}
+
+\begin{figure}[H]
+  \includegraphics[width=\linewidth]{docs/01-rfk.jpg}
+  \caption{tolerance = 0.01}
+\end{figure}
+
+
+\begin{figure}[H]
+  \includegraphics[width=\linewidth]{docs/001-rfk.jpg}
+  \caption{tolerance = 0.001}
+\end{figure}
+
+
+=======
+>>>>>>> 31adf8bead0ca3f0783d74f4a70004e23d603956
+\end{document}

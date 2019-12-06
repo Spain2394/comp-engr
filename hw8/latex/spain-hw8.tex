@@ -1,0 +1,138 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lachaise Assignment
+% LaTeX Template
+% Version 1.0 (26/6/2018)
+%
+% This template originates from:
+% http://www.LaTeXTemplates.com
+%
+% Authors:
+% Marion Lachaise & François Févotte
+% Vel (vel@LaTeXTemplates.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass{article}
+
+\input{structure.tex} % Include the file specifying the document structure and custom commands
+\usepackage{graphicx}
+\newcommand{\ts}{\textsuperscript}
+\usepackage{float}
+
+
+%----------------------------------------------------------------------------------------
+%	ASSIGNMENT INFORMATION
+%----------------------------------------------------------------------------------------
+
+\title{Computational Engineering - Engr 8103 \\ Problem Set \#8} % Title of the assignment
+
+\author{Allen Spain\\ \texttt{avs81684@uga.edu}} % Author name and email address
+
+\date{University of Georgia --- 26 November 2019 } % University, school and/or department name(s) and a date
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\maketitle % Print the title
+
+%----------------------------------------------------------------------------------------
+%	INTRODUCTION
+%----------------------------------------------------------------------------------------
+
+\section*{Problem 1} % Unnumbered section
+(10 pts.) Consider the following transport PDE
+
+\begin{align*}
+u_{t} = D_{u_{xx}} - Fu_{x} \\
+u(0,x) = \frac{2x}{1+x^{4}} \quad 0 \leq x \leq 20 \\
+u(t,0) = 0 \quad 0 \leq t \leq 3 \\
+u(t,20) = 0 \quad 0 \leq t \leq 3
+\end{align*}
+
+\noindent
+Where $u(t, x)$ represents the drug concentration at time t seconds and x inches away from a reference point on the vein, located slightly behind the point of injection. $u(0, x)$ represents the initial drug concentration through the blood vein a moment after the injection:
+
+
+Discretize this PDE using backward time for ut, backward space for ux and the regular second derivative method for uxx, the same one we used in class for the diffusion equation. Assuming $D=0.5$,$F=2$,$dt=2$ and $dx=4$,write down the matrix $M$ where:
+
+\begin{align*}
+M\begin{bmatrix}u^{n+1}_{2}\\u^{n+1}_{3}\\u^{n+1}_{4}\\u^{n+1}_{5}\end{bmatrix} = b
+\end{align*}
+
+Discretizing using $B_{t}B_{x}$
+\begin{align*}
+u_{t} = u^{n}_{k} - u^{n-1}_{k}
+u_{x} = u^{k}_{n} - u^{n}_{k-1}
+u_{xx} = u^{n}_{k-1} - 2u^{n}_{k} + u^{n}_{k+1}
+\end{align*}
+Given that
+
+\begin{align*}
+u_{t} = Du_{xx} - Fu_{x}
+\end{align*}
+The aforementioned discretization $u_{t}$ yields:
+
+\begin{align*}
+	u_{t} = \frac{u^{n}_{k} - u^{n-1}_{k}}{dt} \\
+	u^{n}_{k} - u^{n-1}_{k} = \frac{D dt}{(dx)^{2}} [u^{n}_{k-1} - 2u^{n}_{k} + u^{n}_{k+1}] - \frac{F dt}{dx}[u^{n}_{k} - u^{n}_{k-1}]
+\end{align*}
+
+Define: $L_{1} = \frac{Ddt}{(dx)^{2}}$ and $L_{2} = \frac{Fdt}{dx}$
+
+\begin{align*}
+\therefore  u^{n-1}_{k} = - (L_{1} + L_{2})u^{n+1}_{k-1} + (2L_{1} - L_{2} + 1)u^{n}_{k} - L_{1}u^{n}_{k+1}
+\end{align*}
+
+\begin{align*}
+\text{Assume: } n \rightarrow n + 1 \\
+L_{1} = 0.5(\frac{1}{2}) = \frac{1}{4} \\
+L_{2} = 2(\frac{1}{2}) = 1 \\
+u^{n}_{k} = - (L_{1} + L_{2})u^{n+1}_{k-1} + (2L_{1} - L_{2} + 1)u^{n}_{k} - L_{1}u^{n}_{k+1}
+\end{align*}
+
+So the matrix M can be defined as:
+\begin{align*}
+\begin{bmatrix} (L_{2} + L_{2} - 1) && -L_{1} && 0 && 0\\ -(L_{1} + L_{2}) && (L_{2} + L_{2} - 1) && -L_{1} && 0\\ 0 &&  -(L_{1}+ L_{2}) && (2L_{1} + L_{2} + -1) && -L_{1} \\0 && 0 && -(L_{1} + L_{2}) && (L_{2} + L_{2} - 1) \end{bmatrix}
+\end{align*}
+
+(b) (10 pts.) Write a Matlab code to solve this PDE using the discretization you developed in part (a). Use $D = 0.5$, $F = 2$, $dt = 0.02$, $dx = 0.02$. Note that since backward time methods tend to be more stable, you can afford to use a finer mesh for the space dimension (smaller dx values.) Your code should plot the initial drug concentration and the drug concentrations after one, two and three seconds on the same figure. In other words, plot $u(0, x)$, $u(1, x)$, $u(2, x)$ and $u(3, x)$ vs x. Identify each plot using a legend. Include a hard copy of this figure with your HW solutions.
+
+(b)
+\lstinputlisting{/Users/allenspain/Documents/hw8/drug_Bt.m}
+Had some errors coding despite the math seeming correct
+
+\begin{figure}[H]
+  \includegraphics[width=\linewidth]{docs/1b.png}
+  \caption{1b}
+  % \label{fig:boat1}
+\end{figure}
+
+(c) (5 pts.) Now assume faster blood flow; that is $F = 6$. Repeat part (b) for this case. Does the figure look realistic? Why not? Explain.
+- The concetration would have an abnormal retractio rate, and would therefore diminish faster then realistic.
+
+\section*{Problem 2} % Unnumbered section
+(10 pts.) Consider the same PDE where one of the boundary conditions is changed from Dirichlet to Neumann:
+
+\begin{align*}
+M\begin{bmatrix}u^{n+1}_{2}\\u^{n+1}_{3}\\u^{n+1}_{4}\\u^{n+1}_{5}\\u^{n+1}_{6}\end{bmatrix} = b
+\end{align*}
+
+
+(a)
+\begin{align*}
+\begin{bmatrix} (L_{2} + L_{2} - 1) && -L_{1} && 0 && 0\\ -(L_{1} + L_{2}) && (L_{2} + L_{2} - 1) && -L_{1} && 0\\ 0 &&  -(L_{1}+ L_{2}) && (2L_{1} + L_{2} + -1) && -L_{1} \\0 && 0 && -(L_{1} + L_{2}) && (L_{2} + L_{2} - 1) \\0 && 0 && 0 &&-(L_{1} + L_{2})\end{bmatrix}
+\end{align*}
+
+(b)
+\lstinputlisting{/Users/allenspain/Documents/hw8/drug_Bt_Nbc.m}
+Had some errors coding despite the math seeming correct
+
+\end{document}

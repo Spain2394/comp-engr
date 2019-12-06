@@ -1,0 +1,246 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lachaise Assignment
+% LaTeX Template
+% Version 1.0 (26/6/2018)
+%
+% This template originates from:
+% http://www.LaTeXTemplates.com
+%
+% Authors:
+% Marion Lachaise & François Févotte
+% Vel (vel@LaTeXTemplates.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass{article}
+
+\input{structure.tex} % Include the file specifying the document structure and custom commands
+\usepackage{graphicx}
+
+
+%----------------------------------------------------------------------------------------
+%	ASSIGNMENT INFORMATION
+%----------------------------------------------------------------------------------------
+
+\title{ENGR 8103: Problem Set \#5} % Title of the assignment
+
+\author{Allen Spain\\ \texttt{avs81684@uga.edu}} % Author name and email address
+
+\date{University of Georgia --- 10 October 2019 } % University, school and/or department name(s) and a date
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\maketitle % Print the title
+
+%----------------------------------------------------------------------------------------
+%	INTRODUCTION
+%----------------------------------------------------------------------------------------
+
+
+\section*{Problem 1} % Unnumbered section
+If $T = A(h) + a_{1} h^{1/2} + a_{2} h^{2/2} + a_{3} h^{3/2},$ then what combination of $A(h)$ and $A(h/2)$ should give an accurate estimate of $T$ ?
+
+\begin{equation}
+T = A(h) + a_{1}h^{1/2} + a_{2}h^{2/2} + a_{3}h^{3/2}  + \cdots\\
+\end{equation}
+
+\begin{equation}
+T = A(h/2) + \frac{a_{1}h^{1/2}}{2^{1/2}} + \frac{a_{2}h^{1}}{2} +\\ \frac{a_{3}h^{3/2}}{2^{3/2}} + \cdots
+\end{equation}
+
+Combine (1) and equation (2) as follows $T - \frac{-T}{\sqrt{2}} $ this yields the resultant equation:
+
+\begin{equation}
+T - \frac{T}{\sqrt{2}} =  A(h/2) - \frac{A(h)}{\sqrt{2}} + \underbrace{ \frac{a_{2}h^{1}}{2} + \frac{a_{3}h^{3/2}}{2^3/2} - \frac{a_{3}h^{3/2}}{\sqrt{2}} + \cdots}_\text{Error (E)}
+\end{equation}
+
+Therefore the combination of $A(h) and A(h/2)$ is as follows:
+
+\begin{equation}
+T = \frac{A(h/2) - \frac{A(h)}{\sqrt{2}}}{1-\frac{1}{\sqrt{2}}} + E
+\end{equation}
+
+
+
+\section*{Problem 2} % Unnumbered section
+Consider a second order approximation $A(h)$ to $T$ such that
+\begin{equation}
+T = A(h) + a_{2}h^{2} + a_{4}h^{4} + a_{6}h^{6} + \cdots
+\end{equation}
+
+a) Find a sixth order approximation to $T$ using $A(h), A(2h), A(3h)$
+
+Using step size $ 2h $
+
+\begin{equation}
+-T = A(2h) + 4a_{2}h^{2} + 16a_4h^{4} + 32a_{6}h^{6} + \cdots
+\end{equation}
+
+Combining equation 5 and 6.
+\begin{equation}
+-T = A(2h) + 4a_{2}h^{2} + 16a_4h^{4} + 32a_{6}h^{6} + \cdots \\
+\end{equation}
+
+\begin{equation}
+	4T = 4A(h) + 4a_{2}h^{2} + 4a_{4}h^{4} + 4a_{6}h^{6} + \cdots \\
+\end{equation}
+
+\begin{equation}
+	 \approx 3T = 4A(h) - A(2h) - 12a_{4}h^{4} - \frac{60a_{6}}{h^{6}}{3} \cdots \\
+\end{equation}
+
+\begin{equation}
+  T = \dfrac{4A(h) - A(2h)}{3} - 4a_{4}h^{4} - 20a_{6}h^{6} + \cdots
+\end{equation}
+
+Now coarse correction using step size $3h$
+
+\begin{equation}
+  T = A(3h) + 9a_{2}h^{2} + 81a_{4}h^{4} + 729a_{6}h^{6} + \cdots
+\end{equation}
+
+Combining equation 12 and 5
+\begin{equation}
+ 9T = 9A(h) + 9a_{2}h^{2} + 9a_{4}h^{4} + 9a_{6}h^{6} + \cdots
+\end{equation}
+
+\begin{equation}
+-T = A(3h) + 9a_{2}h^{2} + 81a_{4}h^{4} + 729a_{6}h^{6} + \cdots
+\end{equation}
+
+\begin{equation}
+\approx 9T - T = 9A(h) - A(3h) - 72a_{4}h^{4} - 720a_{6}h^{6} + \cdots
+\end{equation}
+
+This yields...
+\begin{equation}
+T = \frac{9A(h) - A(3h)}{8} - 9a_{4}h^{4} - 90a_{6}h^{6} + \cdots
+\end{equation}
+
+Cancel out high order term using equation 8 and equation 15
+\begin{equation}
+(4T = 4A(h) + 4a_{2}h^{2} + 4a_{4}h^{4} + 4a_{6}h^{6} + \cdots) * 9
+\end{equation}
+
+\begin{equation}
+(T = \frac{9A(h) - A(3h)}{8} - 9a_{4}h^{4} - 90a_{6}h^{6} + \cdots) * -4
+\end{equation}
+
+Subtract the equations
+\begin{equation}
+5T = \frac{3A(h)}{2} - \frac{3A(2h)}{5} - \frac{A(3h)}{10} + 180a_{6}h^{6}
+\end{equation}
+
+Solving gives you a 6th approximation of of $T$
+\begin{equation}
+T = \frac{3A(h)}{2} - \frac{3A(2h)}{5} - \frac{A(3h)}{10} + 180a_{6}h^{6}
+\end{equation}
+
+b) Applying part a)
+\begin{equation}
+T = \underbrace{\frac{3A(h)}{2} - \frac{3A(2h)}{5} - \frac{A(3h)}{10} + 180a_{6}h^{6} + \cdots}_\text{A(h)}
+\end{equation}
+
+
+\begin{equation}
+A(h) = \frac{1}{h^2}[f(x+h) -2f(x) + f(x-h)] + \mathcal{O}(h^{6})
+\end{equation}
+
+By finding the common denominator of all of the fractional componenents in equation 20 you can solve the following
+\begin{equation}
+f''(x) = \frac{1}{36h^{2}}[ 49f(x+h)+ 49f(x+2h) + 49 f(x + 3h) - 294f(x) + 49f(x - h) + 49f(x -2h) + 49f(x -3h)] + \mathcal{O}(h^{6})
+\end{equation}
+
+
+\section*{Problem 3} % Unnumbered section
+
+\noindent
+(a): Consider the following IVP ?
+% Math equation/formula
+\begin{equation}
+	x ^{\prime} = 1 + t + x^2
+\end{equation}
+
+\begin{equation}
+  x(0) = 1
+\end{equation}
+
+\lstinputlisting{/Users/allenspain/Documents/Development/MATLAB/comp-engr/hw5/euler.m}
+
+\begin{verbatim}
+-------------------
+
+Ouput:
+
+index:0 1
+index:1 3
+index:2 14
+index:3 213
+index:4 45586
+
+-------------------
+\end{verbatim}
+
+\begin{figure}
+  \includegraphics[width=\linewidth]{docs/euler.jpg}
+  \caption{Euler's method for approximating $x$}
+  \label{fig:boat1}
+\end{figure}
+
+From Euler's method $ x(2) = 14$ \\
+
+
+(b): Use second-order Taylor Series method to estimate $x(2)$ with step size $h = 1$
+
+\lstinputlisting{/Users/allenspain/Documents/Development/MATLAB/comp-engr/hw5/taylor_series.m}
+
+\begin{verbatim}
+-------------------
+Ouput:
+
+index:0 1
+index:1 5.500000e+00
+index:2 2.156250e+02
+index:3 1.007266e+07
+index:4 1.021957e+21
+
+-------------------
+\end{verbatim}
+
+\noindent
+Using Taylor series second order approximation $x(2) \approx 215$\\
+
+
+\noindent
+
+(c): Use third-order Taylor Series method to estimate $x(2)$ with step size  $ h = 1$ \\
+$ x(2) \approx  399410 $
+
+\lstinputlisting{/Users/allenspain/Documents/Development/MATLAB/comp-engr/hw5/taylor_series3.m}
+
+
+\begin{verbatim}
+-------------------
+Ouput:
+
+index:0 1
+index:1 3
+index:2 14
+index:3 213
+index:4 45586
+
+-------------------
+\end{verbatim}
+
+
+
+\end{document}
