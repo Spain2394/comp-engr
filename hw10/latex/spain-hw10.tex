@@ -1,0 +1,85 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lachaise Assignment
+% LaTeX Template
+% Version 1.0 (26/6/2018)
+%
+% This template originates from:
+% http://www.LaTeXTemplates.com
+%
+% Authors:
+% Marion Lachaise & François Févotte
+% Vel (vel@LaTeXTemplates.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass{article}
+
+\input{structure.tex} % Include the file specifying the document structure and custom commands
+\usepackage{graphicx}
+\newcommand{\ts}{\textsuperscript}
+\usepackage{float}
+
+
+%----------------------------------------------------------------------------------------
+%	ASSIGNMENT INFORMATION
+%----------------------------------------------------------------------------------------
+
+\title{Computational Engineering - Engr 8103 \\ Problem Set \#10} % Title of the assignment
+
+\author{Allen Spain\\ \texttt{avs81684@uga.edu}} % Author name and email address
+
+\date{University of Georgia --- 09 December 2019 } % University, school and/or department name(s) and a date
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\maketitle % Print the title
+
+%----------------------------------------------------------------------------------------
+%	INTRODUCTION
+%----------------------------------------------------------------------------------------
+
+\section*{Question 1} % Unnumbered section
+(20 pts.) The temperature of a single fin of a CPU heatsink is at room temperature ($ 25^{\circ}C$) at time t = 0 hours. Once the computer is turned on, bottom edge of the 10 cm × 10 cm square metal plate receives uniform heat from the CPU, while the top edge of the plate is connected to a water cooling system. The remaining two sides are kept at room temperature thanks to an extremely well ventilated case. Diffusion constant for the metal plate is D = 1/2. This PDE that models this system is
+
+
+% -------------------- %
+% --- Answer Below --- %
+% -------------------- %
+
+\begin{gather*}
+  u_{t} = \frac{1}{2}\Delta u = \frac{1}{2}(u_{xx} + u_{yy})\\
+  u(0,x,y) = 25 \quad 0 \leq x \leq 10, \quad 0 \leq y \leq 10 \\
+  u(t,0,y) = 25 \quad 0 \leq y \leq 10, t > 0 \\
+  u(t,10,y) = 25 \quad 0 \leq y \leq 10, t > 0 \\
+  u(t,x,y)|_{y = 0} = -3 \quad 0 \leq x \leq 10, t > 0 \\
+  u(t,x,y)|_{y = 10} = -3 \quad 0 \leq x \leq 10, t > 0
+\end{gather*}
+
+This PDE is similar to the one we solved in class, with the top and bottom Dirichlet boundary conditions replaced with Neumann boundary conditions, and with a different diffusion coefficient: \\
+
+\begin{gather*}
+  u_{t} = 2\Delta u = 2(u_{xx} + u_{yy})\\
+  u(0,x,y) = 25 \quad 0 \leq  x \leq 10, 0 \leq y \leq 10 \\
+  u(t,0,y) = 25 \quad 0 \leq y \leq 10, t > 0 \\
+  u(t,10,y) = 25 \quad 0 \leq y \leq 10, t > 0 \\
+  u(t,x,0) = 80 \quad 0 \leq x \leq 10, t > 0 \\
+  u(t,x,10) = 5 \quad 0 \leq x \leq 10, t > 0
+\end{gather*}
+
+
+\noindent
+The Matlab code solving this PDE is posted on the course website as \texttt{Diff2D.m}. Modify this code to solve the new PDE. Once run, your code should show a movie of the temperature distribution evolving in time, and should run until the temperature changes become minimal. Your code also should plot the maximum temperature attained on the metal plate vs time. You should expect the plot to start out at $25^{\circ}C$ for $t = 0$, increase with $t$, and approach to a constant value. Name your code \texttt{heatsink.m} and submit a soft copy to \texttt{maohua.liu@uga.edu} include a hard copy of your code and the maximum temperature plot with your HW solutions.
+
+
+
+
+\end{document}
